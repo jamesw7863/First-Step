@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: result.error.message }, { status: 500 });
   }
 
-  return new NextResponse("You have been unsubscribed from daily InternList emails.", {
+  return new NextResponse("You have been unsubscribed from daily FirstStep emails.", {
     headers: { "Content-Type": "text/plain" }
   });
 }

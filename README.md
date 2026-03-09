@@ -1,6 +1,6 @@
-# InternList MVP
+# FirstStep MVP
 
-InternList is an internship discovery platform for UCF students across all majors. Students set preferences once, and receive a daily digest of newly discovered internships.
+FirstStep is an internship discovery platform for UCF students across all majors. Students set preferences once, and receive a daily digest of newly discovered internships.
 
 ## Stack
 

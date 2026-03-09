@@ -1,45 +1,35 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useState } from "react";
 
 type SubmissionState = "idle" | "loading" | "success" | "error";
-
-const defaultMajorMap: Record<string, string[]> = {
-  "Computer Science": ["software engineering", "data", "cybersecurity"],
-  Nursing: ["clinical", "public health", "hospital"],
-  Finance: ["investment", "operations", "accounting"],
-  Marketing: ["digital marketing", "brand", "analytics"]
-};
 
 export function PreferenceForm() {
   const [state, setState] = useState<SubmissionState>("idle");
   const [message, setMessage] = useState<string>("");
-  const [major, setMajor] = useState("Computer Science");
   const [email, setEmail] = useState("");
-  const [graduationYear, setGraduationYear] = useState<number>(new Date().getFullYear() + 1);
-  const [types, setTypes] = useState("software engineering, data science");
-  const [keywords, setKeywords] = useState("intern, entry level");
-  const [locations, setLocations] = useState("Orlando, Remote");
-  const [workStyle, setWorkStyle] = useState("any");
-
-  const starterKeywords = useMemo(() => {
-    return defaultMajorMap[major]?.join(", ") ?? "";
-  }, [major]);
+  const [major, setMajor] = useState("");
+  const [interests, setInterests] = useState("");
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setState("loading");
     setMessage("");
 
+    const parsedInterests = interests
+      .split(",")
+      .map((value) => value.trim())
+      .filter(Boolean);
+
     const payload = {
       email,
       school: "UCF",
       major,
-      graduationYear,
-      internshipTypes: types.split(",").map((value) => value.trim()).filter(Boolean),
-      keywords: keywords.split(",").map((value) => value.trim()).filter(Boolean),
-      locations: locations.split(",").map((value) => value.trim()).filter(Boolean),
-      workStyle
+      graduationYear: new Date().getFullYear() + 1,
+      internshipTypes: parsedInterests.length > 0 ? parsedInterests : ["general internship"],
+      keywords: parsedInterests.length > 0 ? parsedInterests : ["internship"],
+      locations: ["Orlando", "Remote"],
+      workStyle: "any"
     };
 
     const response = await fetch("/api/preferences", {
@@ -56,77 +46,50 @@ export function PreferenceForm() {
     }
 
     setState("success");
-    setMessage("Preferences saved. Check your email for daily internship digests.");
+    setMessage("You are in. FirstStep will email your daily internship matches.");
   }
 
   return (
-    <form className="card" onSubmit={onSubmit}>
-      <h2>Set your internship preferences</h2>
-      <p>
-        <small>Get one daily email with new internships discovered in the last 24 hours.</small>
-      </p>
-      <div className="grid">
+    <form className="hero-form" onSubmit={onSubmit}>
+      <div className="hero-form-row two-col">
         <label>
-          Email
-          <input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
-        </label>
-        <label>
-          Major
-          <select value={major} onChange={(event) => setMajor(event.target.value)}>
-            <option>Computer Science</option>
-            <option>Nursing</option>
-            <option>Finance</option>
-            <option>Marketing</option>
-            <option>Mechanical Engineering</option>
-            <option>Biology</option>
-          </select>
-        </label>
-        <label>
-          Graduation Year
+          <span>YOUR EMAIL</span>
           <input
-            type="number"
-            min={new Date().getFullYear()}
-            max={new Date().getFullYear() + 8}
-            value={graduationYear}
-            onChange={(event) => setGraduationYear(Number(event.target.value))}
+            type="email"
+            required
+            value={email}
+            placeholder="alex@university.edu"
+            onChange={(event) => setEmail(event.target.value)}
           />
         </label>
+
         <label>
-          Internship Types (comma-separated)
-          <input value={types} onChange={(event) => setTypes(event.target.value)} />
-        </label>
-        <label>
-          Keywords (comma-separated)
+          <span>YOUR MAJOR</span>
           <input
-            value={keywords}
-            onChange={(event) => setKeywords(event.target.value)}
-            placeholder={starterKeywords}
+            required
+            value={major}
+            placeholder="e.g. Computer Science, Marketing"
+            onChange={(event) => setMajor(event.target.value)}
           />
         </label>
+      </div>
+
+      <div className="hero-form-row">
         <label>
-          Preferred Locations (comma-separated)
-          <input value={locations} onChange={(event) => setLocations(event.target.value)} />
-        </label>
-        <label>
-          Work Style
-          <select value={workStyle} onChange={(event) => setWorkStyle(event.target.value)}>
-            <option value="any">Any</option>
-            <option value="remote">Remote</option>
-            <option value="hybrid">Hybrid</option>
-            <option value="onsite">Onsite</option>
-          </select>
+          <span>SPECIFIC INTERESTS</span>
+          <input
+            value={interests}
+            placeholder="e.g. Fintech, Sustainable Energy, UX Design, Non-profits..."
+            onChange={(event) => setInterests(event.target.value)}
+          />
         </label>
       </div>
-      <div style={{ marginTop: "1rem" }}>
-        <button type="submit" disabled={state === "loading"}>
-          {state === "loading" ? "Saving..." : "Save Preferences"}
-        </button>
-      </div>
-      {message ? (
-        <p>
-          <small>{message}</small>
-        </p>
-      ) : null}
+
+      <button type="submit" disabled={state === "loading"}>
+        {state === "loading" ? "Starting..." : "Start Daily Alerts ->"}
+      </button>
+
+      {message ? <p className={`form-status ${state}`}>{message}</p> : null}
     </form>
   );
 }

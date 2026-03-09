@@ -13,7 +13,7 @@ function internshipRow(internship: InternshipRecord): string {
 
 function digestTemplate(entries: InternshipRecord[], unsubscribeLink: string): string {
   return `
-    <h2>Your Daily InternList Digest</h2>
+    <h2>Your Daily FirstStep Digest</h2>
     <p>New internship opportunities from the last 24 hours:</p>
     <ul>
       ${entries.map((entry) => internshipRow(entry)).join("\n")}
@@ -44,7 +44,7 @@ export async function sendDigestBatch(candidates: DigestCandidate[]) {
       await resend.emails.send({
         from,
         to: candidate.email,
-        subject: `InternList: ${candidate.internships.length} new internship matches`,
+        subject: `FirstStep: ${candidate.internships.length} new internship matches`,
         html: digestTemplate(candidate.internships, unsubscribeLink)
       });
       results.push({ userId: candidate.userId, status: "sent" });

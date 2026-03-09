@@ -21,7 +21,7 @@ export default async function DashboardPage() {
   return (
     <main>
       <section className="card">
-        <h1 style={{ marginTop: 0 }}>InternList Dashboard</h1>
+        <h1 style={{ marginTop: 0 }}>FirstStep Dashboard</h1>
         <div className="grid">
           <div className="card">
             <h3>Total Users</h3>
