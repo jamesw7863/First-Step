@@ -1,0 +1,47 @@
+[
+  {
+    "id": "levels-fyi-internships",
+    "name": "Levels.fyi Internships",
+    "type": "json",
+    "url": "https://example.com/internships/levels.json",
+    "titleField": "title",
+    "companyField": "company",
+    "locationField": "location",
+    "applyField": "apply_url",
+    "postedDateField": "posted_date",
+    "descriptionField": "description",
+    "categoriesField": "categories",
+    "workStyleField": "work_style",
+    "active": true
+  },
+  {
+    "id": "greenhouse-public",
+    "name": "Greenhouse Public Jobs",
+    "type": "json",
+    "url": "https://example.com/internships/greenhouse.json",
+    "titleField": "title",
+    "companyField": "company",
+    "locationField": "location",
+    "applyField": "apply_url",
+    "postedDateField": "posted_date",
+    "descriptionField": "description",
+    "categoriesField": "categories",
+    "workStyleField": "work_style",
+    "active": true
+  },
+  {
+    "id": "lever-public",
+    "name": "Lever Public Jobs",
+    "type": "json",
+    "url": "https://example.com/internships/lever.json",
+    "titleField": "title",
+    "companyField": "company",
+    "locationField": "location",
+    "applyField": "apply_url",
+    "postedDateField": "posted_date",
+    "descriptionField": "description",
+    "categoriesField": "categories",
+    "workStyleField": "work_style",
+    "active": true
+  }
+]
