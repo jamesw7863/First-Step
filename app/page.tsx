@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { PreferenceForm } from "@/components/PreferenceForm";
 
 export default function HomePage() {
@@ -6,7 +7,12 @@ export default function HomePage() {
     <main className="landing-shell">
       <div className="landing-frame">
         <header className="top-nav">
-          <div className="brand">FIRSTSTEP</div>
+          <div className="brand">
+            <span className="brand-logo-wrap">
+              <Image className="brand-logo" src="/pegasus-logo.webp" alt="UCF Pegasus logo" width={46} height={46} />
+            </span>
+            <span>FIRSTSTEP</span>
+          </div>
           <nav>
             <a href="#how-it-works">How it works</a>
             <a href="#employers">For Employers</a>
